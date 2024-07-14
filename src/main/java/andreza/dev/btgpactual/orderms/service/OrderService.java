@@ -1,10 +1,13 @@
 package andreza.dev.btgpactual.orderms.service;
 
+import andreza.dev.btgpactual.orderms.controller.OrderResponse;
 import andreza.dev.btgpactual.orderms.entity.OrderEntity;
 import andreza.dev.btgpactual.orderms.entity.OrderItem;
 import andreza.dev.btgpactual.orderms.listener.OrderCreatedListener;
 import andreza.dev.btgpactual.orderms.listener.dto.OrderCreatedEvent;
 import andreza.dev.btgpactual.orderms.repository.OrderRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -40,5 +43,10 @@ public class OrderService {
         return event.itens().stream()
                 .map(i -> new OrderItem(i.produto(), i.quantidade(), i.preco()))
                 .toList();
+    }
+
+    public Page<OrderResponse> findAllByCustomerId(Long customerId, PageRequest pageRequest){
+        var orders = orderRepository.findAllByCustomerId(customerId, pageRequest);
+        return  orders.map(OrderResponse::fromEntity);
     }
 }
