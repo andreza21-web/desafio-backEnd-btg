@@ -1,4 +1,4 @@
-package andreza.dev.btgpactual.orderms.controller;
+package andreza.dev.btgpactual.orderms.controller.dto;
 
 import andreza.dev.btgpactual.orderms.entity.OrderEntity;
 
